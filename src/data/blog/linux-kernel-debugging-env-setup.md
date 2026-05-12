@@ -18,7 +18,7 @@ tags:
   - Docker
   - Container
 description: 리눅스 커널 디버깅 환경 셋업
-ogImage: ""
+ogImage: https://img.gyunseo.com/linux-kernel-debugging-env-setup/linux_kernel_qemu_gdb_screenshot.png
 ---
 
 ## Table of contents
