@@ -66,6 +66,14 @@ const structuredData = {
       cssVariable="--font-google-sans-code"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
+    <Font
+      cssVariable="--font-ibm-plex-sans-kr"
+      preload={[{ subset: "korean", weight: 400, style: "normal" }]}
+    />
+    <Font
+      cssVariable="--font-nanum-gothic-coding"
+      preload={[{ subset: "korean", weight: 400, style: "normal" }]}
+    />
 
     <!-- General Meta Tags -->
     <title>{title}</title>
@@ -105,6 +113,7 @@ const structuredData = {
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
+    <!-- Katex -->
     <!-- Google JSON-LD Structured data -->
     <script
       type="application/ld+json"
@@ -122,6 +131,10 @@ const structuredData = {
     />
 
     <meta name="theme-color" content="" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+    />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,

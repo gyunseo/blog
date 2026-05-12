@@ -1,0 +1,10 @@
+{
+  "accentColor": "",
+  "theme": "moonstone",
+  "interfaceFontFamily": "IBM Plex Sans KR",
+  "textFontFamily": "Sarasa Mono K Nerd Font",
+  "monospaceFontFamily": "Sarasa Mono K Nerd Font",
+  "baseFontSize": 17,
+  "cssTheme": "Catppuccin",
+  "translucency": true
+}

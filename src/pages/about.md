@@ -1,37 +1,29 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "About Me"
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+<div>
+  <img src="https://img.gyunseo.com/profile-pics/profile_pic_white_bg.webp" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
+</div>
 
-![Astro Paper](public/astropaper-og.jpg)
+# 이균서(Lee, Gyunseo) / 주니어 소프트웨어 엔지니어
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+- [gyunseo.lee@gmail.com](mailto:gyunseo.lee@gmail.com)
+- \+82 010-5505-2576
+- GitHub: [github.com/gyunseo](https://github.com/gyunseo)
+- LinkedIn: [linkedin.com/in/gyunseo](https://www.linkedin.com/in/gyunseo/)
+- Blog: [gyunseo.com](https://gyunseo.com)
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+# Summary
 
-## Features
+## Experiences
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+- 임베디드 소프트웨어 엔지니어 @ Boeing Linux Team (2026.01 \~ 현재)
+- OS 인턴 @ Boeing Linux Team (2024.09 \~ 2024.12)
+- 성균관대 코딩 플랫폼 백엔드 및 채점 샌드박스 개발 @ Skkuding (2023.03 \~ 2025.08)
+- 정보보호병 @ 대한민국 공군 (2020.09 \~ 2022.06, 병장 만기 전역)
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+## Education
 
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+- 성균관대학교 소프트웨어학과/컴퓨터교육과 (2019.02 \~ 2025.08)

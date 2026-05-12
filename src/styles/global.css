@@ -5,23 +5,24 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+  --background: #eff1f5;
+  --foreground: #4c4f69;
+  --accent: #dc8a78;
+  --muted: #e6e9ef;
+  --border: #acb0be;
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --background: #303446;
+  --foreground: #c6d0f5;
+  --accent: #ca9ee6;
+  --muted: #292c3c;
+  --border: #626880;
 }
 
 @theme inline {
-  --font-app: var(--font-google-sans-code);
+  --font-app: var(--font-ibm-plex-sans-kr);
+  --font-mono: var(--font-google-sans-code), var(--font-nanum-gothic-coding);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);

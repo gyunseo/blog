@@ -23,6 +23,32 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# pagefind
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
+# logseq
+logseq/
+journal/
+/pages/
+# 루트의 pages/ 폴더만 무시
+
+# excalidraw
+Excalidraw/
+
+# ostep pdfs
+ostep-pdfs/
+
+# algorithms-pdfs
+algorithms-pdfs/
+
+# data-communcations-and-networking-pdfs
+data-communications-and-networking-pdfs/
+
+# pagefind
 public/pagefind

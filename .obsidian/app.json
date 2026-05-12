@@ -1,0 +1,16 @@
+{
+  "useMarkdownLinks": true,
+  "attachmentFolderPath": "src/assets",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "src/content/blog",
+  "showUnsupportedFiles": true,
+  "newLinkFormat": "absolute",
+  "vimMode": false,
+  "showLineNumber": true,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}
