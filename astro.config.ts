@@ -78,7 +78,8 @@ export default defineConfig({
         name: "Google Sans Code",
         cssVariable: "--font-google-sans-code",
         provider: "local",
-        fallbacks: ["monospace"],
+        fallbacks: [],
+        optimizedFallbacks: false,
         variants: [
           {
             src: ["./src/assets/fonts/google-sans-code-v17-latin-300.woff2"],
@@ -165,6 +166,7 @@ export default defineConfig({
         cssVariable: "--font-nanum-gothic-coding",
         provider: "local",
         fallbacks: ["monospace"],
+        optimizedFallbacks: false,
         variants: [
           {
             src: [
