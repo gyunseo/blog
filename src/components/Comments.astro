@@ -1,0 +1,110 @@
+---
+
+---
+
+<section class="mt-12">
+  <hr class="mb-8 border-dashed" />
+  <div id="isso-thread">
+    <noscript>댓글을 보려면 JavaScript를 활성화해 주세요.</noscript>
+  </div>
+</section>
+
+<!--
+  data-astro-rerun: Astro View Transitions 페이지 이동 시마다 재실행
+  isso embed.js를 동적으로 주입해서 각 포스트마다 정확한 댓글 스레드 로드
+-->
+<script is:inline data-astro-rerun>
+  (function () {
+    const thread = document.getElementById("isso-thread");
+    if (!thread) return;
+
+    thread.innerHTML = "";
+
+    // 이전 페이지에서 주입된 isso 스타일/스크립트 제거 후 재주입
+    document.getElementById("isso-style")?.remove();
+    document.querySelector("script[data-isso-embed]")?.remove();
+
+    const script = document.createElement("script");
+    script.src = "https://comments.gyunseo.com/js/embed.min.js";
+    script.dataset.isso = "https://comments.gyunseo.com/";
+    script.dataset.issoLang = "ko";
+    script.dataset.issoVote = "true";
+    script.dataset.issoEmbed = "true";
+    document.head.appendChild(script);
+  })();
+</script>
+
+<style is:global>
+  /*
+    isso CSS는 :root (specificity 0,1,0)에 변수를 선언함.
+    html[data-theme="..."] (specificity 0,1,1)으로 오버라이드해서
+    isso가 나중에 로드되어도 블로그 테마 색상이 우선 적용됨.
+  */
+
+  html[data-theme="light"] {
+    --isso-primary-text-color: #4c4f69;
+    --isso-secondary-text-color: #acb0be;
+    --isso-border: 1px solid #acb0be;
+    --isso-box-shadow-color: rgba(0, 0, 0, 0.06);
+    --isso-hover-color: #dc8a78;
+    --isso-link-hover-color: #dc8a78;
+    --isso-link-text-shadow-color: transparent;
+    --isso-input-background-color: #eff1f5;
+    --isso-input-outline-color: #dc8a78;
+    --isso-button-background-color: #e6e9ef;
+    --isso-button-border: 1px solid #acb0be;
+    --isso-button-hover-background-color: #acb0be;
+    --isso-button-active-background-color: #9ba0b0;
+    --isso-preview-border-color: #acb0be;
+    --isso-preview-box-shadow-color: #acb0be;
+    --isso-preview-background: repeating-linear-gradient(
+      -45deg,
+      #e6e9ef,
+      #e6e9ef 10px,
+      #eff1f5 10px,
+      #eff1f5 20px
+    );
+    --isso-pre-color: #4c4f69;
+    --isso-pre-background-color: #e6e9ef;
+    --isso-pre-border-color: #acb0be;
+    --isso-comment-divider-color: #acb0be;
+    --isso-page-author-suffix-color: #dc8a78;
+    --isso-target-fade-background-color: rgba(220, 138, 120, 0.2);
+  }
+
+  html[data-theme="dark"] {
+    --isso-primary-text-color: #c6d0f5;
+    --isso-secondary-text-color: #626880;
+    --isso-border: 1px solid #626880;
+    --isso-box-shadow-color: rgba(0, 0, 0, 0.3);
+    --isso-hover-color: #ca9ee6;
+    --isso-link-hover-color: #ca9ee6;
+    --isso-link-text-shadow-color: transparent;
+    --isso-input-background-color: #292c3c;
+    --isso-input-outline-color: #ca9ee6;
+    --isso-button-background-color: #292c3c;
+    --isso-button-border: 1px solid #626880;
+    --isso-button-hover-background-color: #626880;
+    --isso-button-active-background-color: #737994;
+    --isso-preview-border-color: #626880;
+    --isso-preview-box-shadow-color: #626880;
+    --isso-preview-background: repeating-linear-gradient(
+      -45deg,
+      #292c3c,
+      #292c3c 10px,
+      #303446 10px,
+      #303446 20px
+    );
+    --isso-pre-color: #c6d0f5;
+    --isso-pre-background-color: #292c3c;
+    --isso-pre-border-color: #626880;
+    --isso-comment-divider-color: #626880;
+    --isso-page-author-suffix-color: #ca9ee6;
+    --isso-target-fade-background-color: rgba(202, 158, 230, 0.2);
+  }
+
+  #isso-thread {
+    font-family: var(--font-ibm-plex-sans-kr), sans-serif;
+    color: var(--foreground);
+  }
+</style>

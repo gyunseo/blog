@@ -10,6 +10,7 @@ import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
+import Comments from "@/components/Comments.astro";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -157,6 +158,10 @@ const nextPost =
           </a>
         )
       }
+    </div>
+    <!-- Comments Section -->
+    <div data-pagefind-ignore>
+      <Comments />
     </div>
   </main>
   <Footer />
