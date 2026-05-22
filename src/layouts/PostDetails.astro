@@ -14,7 +14,6 @@ import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
-import Remark42 from "@/components/Remark42.astro"; // 우리가 만든 Remark42 컴포넌트
 
 type Props = {
   post: CollectionEntry<"blog">;
@@ -127,7 +126,6 @@ const nextPost =
 
     <ShareLinks />
     <hr class="my-6 border-dashed" />
-    {SITE.comment.system === "remark42" && <Remark42 />}
 
     <!-- Previous/Next Post Buttons -->
     <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
