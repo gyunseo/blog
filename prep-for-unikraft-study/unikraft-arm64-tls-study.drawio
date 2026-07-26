@@ -1,0 +1,230 @@
+<mxfile host="65bd71144e">
+    <diagram id="tls-layout" name="1. TLS Area 레이아웃">
+        <mxGraphModel dx="584" dy="377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title1" value="Unikraft ARM64 TLS Area 레이아웃 (variant 2) — arch/arm/arm64/tls.c:87-120" style="text;html=1;fontSize=18;fontStyle=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="800" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="pad1" value="PADDING 1&#xa;tls_padding_1_size() — tls.c:162-174&#xa;(TCB 앞부분을 TLS_AREA_ALIGN=16으로 정렬)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="70" width="360" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="tcb" value="Thread Control Block (TCB)&#xa;길이: TCB_SIZE — tls.c:77-83&#xa;libC(musl 등)가 자기 포맷으로 사용 가능&#xa;ukarch_tls_area_init()에서 초기화 — tls.c:242-251" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="140" width="360" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="overlap" value="AARCH64_TCB_OVERLAP (마지막 16B) — tls.c:69-75&#xa;ABI: DTV 포인터 + 구현용 포인터 자리 (tls.c:111-114)&#xa;※ arm64+lib-musl 빌드는 overlap=0 → tlsp가 TCB 끝, 패딩2가 16B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="250" width="360" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pad2" value="PADDING 2&#xa;tls_padding_2_size() = tls_data_offset() - AARCH64_TCB_OVERLAP — tls.c:143-151" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="300" width="360" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tdata" value=".tdata (초기값 있는 TLS 변수)&#xa;커널 이미지의 _tls_start~_etdata에서 memcpy — tls.c:267&#xa;크기: tls_tdata_size() — tls.c:153-156" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="360" width="360" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbss" value=".tbss (0으로 클리어되는 TLS 변수)&#xa;memset 0 — tls.c:274&#xa;크기: tls_tbss_size() = _tls_end - _etdata — tls.c:157-160" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="450" width="360" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_area" value="tls_area (uk_memalign으로 할당, 16B 정렬)&#xa;총 크기 = ukarch_tls_area_size() — tls.c:181-188" style="text;html=1;fontSize=12;align=right;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="70" width="290" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_tcbp" value="tcbp = ukarch_tls_tcb_get(tlsp)&#xa;tls.c:214-219" style="text;html=1;fontSize=12;align=right;fontColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="130" width="290" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow_tcbp" style="endArrow=block;html=1;strokeColor=#6c8ebf;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="240" y="145" as="sourcePoint"/>
+                        <mxPoint x="320" y="145" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_tlsp" value="tlsp = ukarch_tls_tlsp(area) — tls.c:191-201&#xa;= tpidr_el0에 저장되는 값&#xa;(활성화: uk_lcpu_tlsp_set)" style="text;html=1;fontSize=12;fontStyle=1;align=right;fontColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="235" width="290" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow_tlsp" style="endArrow=block;html=1;strokeColor=#d79b00;strokeWidth=2;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="240" y="255" as="sourcePoint"/>
+                        <mxPoint x="320" y="255" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="brace_dataoff" value="data_off = max(16, p_align) = 16&#xa;tls_data_offset() — tls.c:130-141&#xa;컴파일러가 링크타임에 가정하는 거리 → 반드시 일치 (tls.c:122-127)" style="text;html=1;fontSize=11;align=left;fontColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="290" width="330" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow_off1" style="endArrow=block;startArrow=block;html=1;strokeColor=#b85450;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="690" y="255" as="sourcePoint"/>
+                        <mxPoint x="690" y="360" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="master" value="커널 이미지 (마스터 템플릿)&#xa;_tls_start / _etdata / _tls_end&#xa;선언: tls.c:85&#xa;정의: plat/common/include/uk/plat/common/common.lds.h:139-163&#xa;Xen/arm64: plat/xen/arm/link64.lds.S:41-42 (tls PT_TLS), :101" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="400" width="340" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow_copy" value="memcpy (tls.c:267)" style="endArrow=block;html=1;strokeColor=#82b366;fontSize=11;" parent="1" source="master" target="tdata" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="tls-flow" name="2. 호출 흐름 (엔트리 포인트)">
+        <mxGraphModel dx="584" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title2" value="TLS 호출 흐름: ① 부팅(최초) ② 스레드 생성 ③ 컨텍스트 스위치 ④ 변수 접근" style="text;html=1;fontSize=18;fontStyle=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="900" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane1" value="① 부팅 (엔트리 포인트, 1회)" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="b1" value="uk_boot_entry()&#xa;lib/ukboot/boot.c:240" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="100" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="b2" value="① 할당: uk_memalign(align, size)&#xa;boot.c:319-321&#xa;→ ukarch_tls_area_align/size (tls.c:176-188)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="180" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="b3" value="② 초기화: ukarch_tls_area_init(tls)&#xa;boot.c:326 → tls.c:226-281&#xa;(패딩 zero, TCB init, .tdata 복사, .tbss zero)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="280" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="b4" value="③ 활성화: uktlsp = ukarch_tls_tlsp(tls)&#xa;boot.c:328 → tls.c:191-201&#xa;uk_lcpu_tlsp_set(uktlsp) — boot.c:329" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="380" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="eb1" style="endArrow=block;html=1;" parent="1" source="b1" target="b2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eb2" style="endArrow=block;html=1;" parent="1" source="b2" target="b3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eb3" style="endArrow=block;html=1;" parent="1" source="b3" target="b4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane2" value="② 스레드 생성 (스레드마다)" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="60" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="_uk_thread_struct_init_alloc()&#xa;lib/uksched/thread.c:383" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="100" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="t2" value="① 할당: uk_memalign(...)&#xa;thread.c:421-425 (ectx 동반) / 438-439" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="180" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="t3" value="tlsp = ukarch_tls_tlsp(tls) — thread.c:446&#xa;② 초기화: ukarch_tls_area_init(tls) — thread.c:467" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="280" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="t4" value="③ 저장만: t-&gt;tlsp / t-&gt;uktlsp에 보관&#xa;lib/uksched/include/uk/thread.h:59-60&#xa;(활성화는 컨텍스트 스위치 때)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="380" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="et1" style="endArrow=block;html=1;" parent="1" source="t1" target="t2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="et2" style="endArrow=block;html=1;" parent="1" source="t2" target="t3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="et3" style="endArrow=block;html=1;" parent="1" source="t3" target="t4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane3" value="③ 컨텍스트 스위치 (스위치마다)" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="60" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="uk_sched_thread_switch(next)&#xa;lib/uksched/include/uk/sched_impl.h:100-133" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="100" width="300" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="prev-&gt;tlsp = uk_lcpu_tlsp_get()&#xa;sched_impl.h:111 (이전 스레드 tlsp 저장)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="180" width="300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="uk_lcpu_tlsp_set(next-&gt;tlsp)&#xa;sched_impl.h:117 (다음 스레드 tlsp 복원)&#xa;→ 이후 ukarch_ctx_switch — sched_impl.h:132" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="280" width="300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="es1" style="endArrow=block;html=1;" parent="1" source="s1" target="s2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es2" style="endArrow=block;html=1;" parent="1" source="s2" target="s3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="chain" value="uk_lcpu_tlsp_set() 위임 체인 (Xen + arm64)&#xa;&#xa;uk_lcpu_tlsp_set — lib/uklcpu/include/uk/lcpu/sysctx.h:47-50&#xa;→ uk_pal_tlsp_set — plat/xen/pal/include/uk/plat/pal/sysctx.h:65-68&#xa;→ uk_plat_xen_tlsp_set — plat/xen/arch/arm64/include/uk/plat/xen/arch/sysctx.h:25-29&#xa;→ uk_plat_native_tlsp_set — plat/native/arch/arm64/include/uk/plat/native/arch/sysctx.h:59-62&#xa;→ msr tpidr_el0 (UK_ARCH_ARM64_SYSREG_WRITE)  ※ 하이퍼콜 불필요" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;spacingLeft=10;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="500" width="660" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec1" style="endArrow=block;html=1;strokeColor=#9673a6;dashed=1;" parent="1" source="b4" target="chain" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec2" style="endArrow=block;html=1;strokeColor=#9673a6;dashed=1;" parent="1" source="s3" target="chain" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane4" value="④ TLS 변수 접근 (매번, 런타임 함수 호출 없음)" style="text;html=1;fontSize=14;fontStyle=1;fontColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="500" width="340" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" value="__thread int x; 접근 시 컴파일러 인라인 코드:&#xa;mrs xN, tpidr_el0&#xa;add xN, xN, #링크타임_오프셋&#xa;&#xa;오프셋은 p_align 기준으로 링크 타임에 고정&#xa;→ TLS_AREA_ALIGN 일치 필수 (tls.c:122-128)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=10;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="540" width="320" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="tls-area-init" name="3. ukarch_tls_area_init 동작">
+        <mxGraphModel dx="584" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="i_title" value="ukarch_tls_area_init(tls_area) — 쓰기 커서(writepos)가 왼쪽→오른쪽으로 한 번 지나가며 5단계로 채움 (arch/arm/arm64/tls.c:226-281 / 수치는 arm64+lib-musl 실제 빌드: TCB_SIZE=200 (Makefile.uk:41), overlap=0 (Makefile.uk:48-51))" style="text;html=1;fontSize=15;fontStyle=1;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_master" value="커널 이미지 마스터 템플릿&#xa;_tls_start ~ _etdata (.tdata 초기값 원본)&#xa;선언: tls.c:85 / 정의: common.lds.h:139-163" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="70" width="300" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_seg1" value="① 패딩 1&#xa;8B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="200" width="110" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_seg2" value="② TCB (TCB_SIZE=200B)&#xa;musl: struct pthread" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=top;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="200" width="330" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_seg3" value="③ 패딩 2&#xa;16B&#xa;(구 musl 모드면 0B)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="200" width="100" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_seg4" value="④ .tdata&#xa;(초기값 있는 __thread 변수)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="200" width="280" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_seg5" value="⑤ .tbss&#xa;(0으로 시작하는 __thread 변수)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="200" width="260" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_arrow_copy" value="④ memcpy — tls.c:267 (유일한 &#39;복사&#39; 단계)" style="endArrow=block;html=1;strokeColor=#82b366;strokeWidth=2;fontSize=11;" parent="1" source="i_master" target="i_seg4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_m_area" value="tls_area (+0)&#xa;16B 정렬 필수&#xa;(사전 assert tls.c:228)" style="text;html=1;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="300" width="120" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_m_tcbp" value="tcbp (+8)&#xa;(위치 assert tls.c:245)" style="text;html=1;fontSize=10;align=center;fontColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="346" width="120" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_m_tlsp" value="tlsp (+208) = TCB 끝&#xa;overlap=0이라 정확히 경계&#xa;(tlsp assert tls.c:252-253)" style="text;html=1;fontSize=10;fontStyle=1;align=center;fontColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="300" width="160" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_m_tdata" value=".tdata 시작 (+224 = tlsp+16)&#xa;16B 정렬 assert tls.c:266" style="text;html=1;fontSize=10;align=center;fontColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="346" width="180" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_m_end" value="area 끝&#xa;(최종 크기 assert&#xa;tls.c:278-279)" style="text;html=1;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1090" y="300" width="110" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_cursor" value="writepos 커서 진행 방향 →" style="endArrow=block;html=1;strokeColor=#b85450;strokeWidth=2;fontSize=12;fontColor=#b85450;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="60" y="180" as="sourcePoint"/>
+                        <mxPoint x="1140" y="180" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="i_step1" value="① memset(writepos, 0, 패딩1)&#xa;tls.c:238 (CLEAR_TBSS 옵션 시)&#xa;아무도 안 읽는 공간이지만 0으로" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=10;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="420" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_step2" value="② TCB 초기화 — 둘 중 하나&#xa;- libC 있음: ukarch_tls_tcb_init(writepos) 호출&#xa;  → lib-musl __uk_init_tls.c가 구현 (tls.c:246-247)&#xa;- libC 없음: memset 0 (tls.c:249)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="420" width="300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_step3" value="③ memset(writepos, 0, 패딩2)&#xa;tls.c:259 — ABI 거리(tlsp+16=.tdata) 유지용" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=10;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="420" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_step4" value="④ memcpy(writepos, _tls_start, tdata크기)&#xa;tls.c:267 — __thread 변수 초기값 복사" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="420" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_step5" value="⑤ memset(writepos, 0, tbss크기)&#xa;tls.c:274 — .tbss 0 클리어&#xa;(디버그 출력만 tdata_size 오타, tls.c:271-272)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;fontSize=10;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="1140" y="420" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="i_note" value="핵심 관찰 3가지&#xa;1) 이 함수는 &#39;레이아웃 규칙(각 *_size 함수)&#39;을 그대로 실행에 옮기는 유일한 쓰기 코드 — 규칙과 실행이 어긋나면 중간 assert들이 즉시 잡아냄&#xa;2) 복사는 .tdata 한 곳뿐, 나머지는 전부 0 클리어 또는 libC 위임&#xa;3) 마지막 assert(tls.c:278-279)가 ukarch_tls_area_size()와 실제 쓴 바이트 수의 일치를 보증 → 크기 계산 함수들과 이 함수는 한 몸" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;spacingLeft=10;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="530" width="1080" height="90" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
